@@ -8,6 +8,10 @@ public class DrawFrame : MonoBehaviour
     int[] triangles;
     public bool inDrawMode = false;
 
+    [SerializeField] private Transform frameTransform;
+    [SerializeField] private Material frameMat;
+    [SerializeField] private float frameWidth;
+
     void Start()
     {
         mesh = new Mesh();
@@ -29,7 +33,7 @@ public class DrawFrame : MonoBehaviour
             }
         }
 
-        if (inDrawMode)
+        else
         {
             if (Input.GetMouseButton(0))
             {
@@ -52,6 +56,10 @@ public class DrawFrame : MonoBehaviour
         }
 
         UpdateMesh();
+    }
+
+    private void LateUpdate()
+    {
     }
 
     public LineRenderer lineRenderer;
