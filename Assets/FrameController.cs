@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class FrameController : MonoBehaviour
 {
+    public static FrameController s_Instance;
+
     [SerializeField] private Transform frameTransform;
     [SerializeField] private List<Transform> nodeTransforms;
     [SerializeField] private TMP_Text textUI;
@@ -14,9 +16,12 @@ public class FrameController : MonoBehaviour
     private Vector3 posB;
     private LineRenderer lr;
     private List<NodeScript> nodeScripts;
+    private float score = 0f;
 
     private void Awake()
     {
+        s_Instance = this;
+
         frameTransform.localScale = Vector3.zero;
 
         isSelecting = false;
@@ -64,7 +69,7 @@ public class FrameController : MonoBehaviour
                 float bbMinY = Mathf.Min(posA.y, posB.y);
                 float bbMaxY = Mathf.Max(posA.y, posB.y);
 
-                float avg = 0;
+                float total = 0;
                 int count = 0;
                 for (int i = 0; i < nodeTransforms.Count; i++)
                 {
@@ -77,7 +82,7 @@ public class FrameController : MonoBehaviour
                     {
                         nodeScripts[i].Highlight(true);
 
-                        avg += nodeScripts[i].CensusValue;
+                        total += nodeScripts[i].CensusValue;
                         count++;
                     }
                     else
@@ -85,7 +90,15 @@ public class FrameController : MonoBehaviour
                         nodeScripts[i].Highlight(false);
                     }
                 }
-                textUI.text = "Value = " + (avg / count).ToString("F2");
+                if (count > 0)
+                {
+                    score = total / count;
+                }
+                else
+                {
+                    score = 0;
+                }
+                textUI.text = "Value = " + (score).ToString("F2");
             }
             else
             {
@@ -103,5 +116,10 @@ public class FrameController : MonoBehaviour
             posA = cursorProjection;
             posB = cursorProjection;
         }
+    }
+
+    public float GetValue()
+    {
+        return score;
     }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class DrawFrame : MonoBehaviour
 {
+    public static DrawFrame s_Instance;
+
     Mesh mesh;
     Vector3[] vertices;
     int[] triangles;
@@ -11,6 +13,11 @@ public class DrawFrame : MonoBehaviour
     [SerializeField] private Transform frameTransform;
     [SerializeField] private Material frameMat;
     [SerializeField] private float frameWidth;
+
+    private void Awake()
+    {
+        s_Instance = this;
+    }
 
     void Start()
     {
