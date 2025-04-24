@@ -51,7 +51,7 @@ public class TakePicture : MonoBehaviour
             timer += Time.deltaTime;
             blackout.color = new Color(0f, 0f, 0f, timer / fadeTime);
         }
-        textUI.text = FrameController.s_Instance.GetValue().ToString("F2");
+        textUI.text = "Your value of being objective is " + FrameController.s_Instance.GetValue().ToString("F2");
         textUI.gameObject.SetActive(true);
         btnUI.SetActive(true);
         //while (timer < fadeTime)
@@ -76,5 +76,10 @@ public class TakePicture : MonoBehaviour
     public void NextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

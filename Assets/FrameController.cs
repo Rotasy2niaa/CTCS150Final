@@ -92,7 +92,7 @@ public class FrameController : MonoBehaviour
                 }
                 if (count > 0)
                 {
-                    score = total / count;
+                    score = total;
                 }
                 else
                 {
